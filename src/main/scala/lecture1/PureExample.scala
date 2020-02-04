@@ -31,10 +31,13 @@ object UnPureAssignment {
 
   def bmiCalculator(weight: Int, heightInCm: Int): Unit = {
     val heightInMeters = heightInCm.toDouble / 100
-    weight / (heightInMeters * heightInMeters) match {
-      case bmi@_ if bmi < 18.5 => println(s"Sorry, your underweight, your bmi is: $bmi")
-      case bmi@_ if bmi >= 18.5 && bmi < 25 => println(s"Your have normal weight and your bmi is: $bmi")
-      case bmi@_ if bmi >= 25 => println(s"Your overweight, your bmi is: $bmi")
+    val bmi = weight / (heightInMeters * heightInMeters)
+    if (bmi < 18.5) {
+      println(s"Sorry, your underweight, your bmi is: $bmi")
+    } else if (bmi >= 18.5 && bmi < 25) {
+      println(s"Your have normal weight and your bmi is: $bmi")
+    } else {
+      println(s"Your overweight, your bmi is: $bmi")
     }
   }
 
