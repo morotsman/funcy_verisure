@@ -1,4 +1,4 @@
-package lecture1
+package answers.lecture1
 
 object UnPureExample {
 
@@ -49,4 +49,21 @@ object UnPureAssignment {
 
 object PureAssignment {
 
+  def bmi(weight: Int, heightInCm: Int): Double = {
+    val heightInMeters = heightInCm.toDouble / 100
+    weight / (heightInMeters * heightInMeters)
+  }
+
+  def createMessage(bmi: Double): String =
+    if (bmi < 18.5) {
+      s"Sorry, your underweight, your bmi is: $bmi"
+    } else if (bmi >= 18.5 && bmi < 25) {
+      s"Your have normal weight and your bmi is: $bmi"
+    } else {
+      s"Your overweight, your bmi is: $bmi"
+    }
+
+  def main(args: Array[String]): Unit = {
+    println(createMessage(bmi(70, 178)))
+  }
 }
