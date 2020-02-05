@@ -1,8 +1,7 @@
-package excercises.lecture2
+package answers.lecture3
 
-
-import org.scalacheck.Properties
 import org.scalacheck.Prop.forAll
+import org.scalacheck.Properties
 
 object StringSpecification extends Properties("String") {
 
@@ -18,4 +17,15 @@ object StringSpecification extends Properties("String") {
     (a+b+c).substring(a.length, a.length+b.length) == b
   }
 
+  property("endsWith") = forAll { (a: String, b: String) =>
+    (a+b).endsWith(b)
+  }
+
+  property("contains") = forAll { (a: String, b: String, c: String) =>
+    (a+b+c).contains(b)
+  }
+
+  property("not contains") = forAll { (a: String, b: String, c: String) =>
+    !(a+b+c).contains(a + b + c + "a")
+  }
 }

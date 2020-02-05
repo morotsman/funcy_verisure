@@ -1,7 +1,7 @@
-package excercises.lecture2
+package excercises.lecture3
 
-import org.scalacheck.Properties
 import org.scalacheck.Prop.forAll
+import org.scalacheck.Properties
 
 object MyListSpecification extends Properties("MyList") {
 
