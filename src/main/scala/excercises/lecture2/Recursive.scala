@@ -16,6 +16,7 @@ object Recursive {
   //F(N) = F(N-1) + F(N-2)
   def fibonacciSlow(levels: Long): List[Long] = ???
 
+  // an Opton can be either None or Some
   def max(is: List[Int]): Option[Int] = is match {
     case Nil => ???
     case i :: Nil => ???
