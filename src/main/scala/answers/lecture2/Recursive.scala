@@ -18,7 +18,11 @@ object Recursive {
     case n => fibonacciSlow(n - 1) + fibonacciSlow(n - 2)
   }
 
-  def max(is: List[Int]): Option[Int] = ???
+  def max(is: List[Int]): Option[Int] =  is match {
+    case Nil => None
+    case i :: Nil => Some(i)
+    case i :: tail => max(tail).map(t => t max i)
+  }
 
   //    1
   //   1 1

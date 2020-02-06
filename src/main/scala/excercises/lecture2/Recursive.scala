@@ -18,6 +18,7 @@ object Recursive {
 
   def max(is: List[Int]): Option[Int] = is match {
     case Nil => ???
+    case i :: Nil => ???
     case i :: tail => ???
   }
 

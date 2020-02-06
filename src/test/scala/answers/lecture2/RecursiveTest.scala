@@ -1,14 +1,16 @@
 package answers.lecture2
 
-import java.math.BigInteger
-
 import org.scalatest.FunSuite
 import Recursive._
 
 class RecursiveTest extends FunSuite {
 
   test("testMax") {
-
+    assert(max(List()).isEmpty)
+    assert(max(List(1)).contains(1))
+    assert(max(List(1, 2)).contains(2))
+    assert(max(List(2, 1)).contains(2))
+    assert(max(List(-2, 1)).contains(1))
   }
 
   test("testPascalsTriangle") {
