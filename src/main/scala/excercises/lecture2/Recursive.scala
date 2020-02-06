@@ -1,6 +1,11 @@
 package excercises.lecture2
 
-class Recursive {
+object Recursive {
+
+  def sum[A](li: List[Int]): Int = li match {
+    case Nil => 0
+    case i :: tail => i + sum(tail)
+  }
 
   //F(0) = 0,
   //F(1) = 1,
@@ -11,7 +16,10 @@ class Recursive {
   //0! = 1
   def factorial(n: Long): Long = ???
 
-  def max(is: List[Int]): Option[Int] = ???
+  def max(is: List[Int]): Option[Int] = is match {
+    case Nil => ???
+    case i :: tail => ???
+  }
 
   //    1
   //   1 1
