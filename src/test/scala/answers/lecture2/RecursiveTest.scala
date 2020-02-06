@@ -5,6 +5,11 @@ import Recursive._
 
 class RecursiveTest extends FunSuite {
 
+  test("numbersBelow5") {
+    assert(numbersBelow5(List()) == List())
+    assert(numbersBelow5(List(1, 2, 6, 2)) == List(1, 2, 2))
+  }
+
   test("testMax") {
     assert(max(List()).isEmpty)
     assert(max(List(1)).contains(1))
@@ -13,8 +18,18 @@ class RecursiveTest extends FunSuite {
     assert(max(List(-2, 1)).contains(1))
   }
 
+  //    1
+  //   1 1
+  //  1 2 1
+  // 1 3 3 1
+  //1 4 6 4 1
   test("testPascalsTriangle") {
-
+    assert(pascalsTriangle(0) == List(List()))
+    assert(pascalsTriangle(1) == List(List(1)))
+    assert(pascalsTriangle(2) == List(List(1), List(1, 1)))
+    assert(pascalsTriangle(3) == List(List(1), List(1, 1), List(1, 2, 1)))
+    assert(pascalsTriangle(4) == List(List(1), List(1, 1), List(1, 2, 1), List(1, 3, 3, 1)))
+    assert(pascalsTriangle(5) == List(List(1), List(1, 1), List(1, 2, 1), List(1, 3, 3, 1), List(1, 4, 6, 4, 1)))
   }
 
   test("testFactorial") {
