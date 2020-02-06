@@ -7,14 +7,14 @@ object Recursive {
     case i :: tail => i + sum(tail)
   }
 
+  //0! = 1
+  //n! = n * (n-1) * (n-2) * ... * 2 * 1
+  def factorial(n: Long): Long = ???
+
   //F(0) = 0,
   //F(1) = 1,
   //F(N) = F(N-1) + F(N-2)
   def fibonacciSlow(levels: Long): List[Long] = ???
-
-  //n! = n * (n-1) * (n-2) * ... * 2 * 1
-  //0! = 1
-  def factorial(n: Long): Long = ???
 
   def max(is: List[Int]): Option[Int] = is match {
     case Nil => ???
