@@ -37,7 +37,7 @@ object Recursive {
 
   def fibonacciFast(level: Long): Long = ???
 
-  def factorialTailRecursive(n: Long): Long = ???
+  def factorialTailRecursive(n: BigInt): BigInt = ???
 
   //    1
   //   1 1
