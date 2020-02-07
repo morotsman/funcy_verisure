@@ -1,4 +1,4 @@
-package excercises.lecture1
+package excercises.into
 
 import org.scalatest.FunSuite
 

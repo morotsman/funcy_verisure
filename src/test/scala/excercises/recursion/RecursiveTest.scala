@@ -1,4 +1,4 @@
-package excercises.lecture2
+package excercises.recursion
 
 import org.scalatest.FunSuite
 

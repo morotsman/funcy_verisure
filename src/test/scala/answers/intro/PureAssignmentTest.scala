@@ -1,4 +1,4 @@
-package answers.lecture1
+package answers.intro
 
 import org.scalatest.FunSuite
 

@@ -1,4 +1,4 @@
-package excercises.lecture3
+package excercises.list
 
 case class Cons[+A](head: A, tail: MyList[A]) extends MyList[A]
 

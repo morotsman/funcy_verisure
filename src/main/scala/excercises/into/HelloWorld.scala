@@ -1,4 +1,4 @@
-package excercises.lecture1
+package excercises.into
 
 object HelloWorld {
   def main(args: Array[String]): Unit = {

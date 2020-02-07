@@ -1,4 +1,4 @@
-package answers.lecture2
+package answers.recursion
 
 object Recursive {
 
