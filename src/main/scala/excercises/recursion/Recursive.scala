@@ -17,7 +17,14 @@ object Recursive {
     case i :: is =>  ???
   }
 
-  def lengthOfStrings (li: List[String]): List[Int] = ???
+  def stringsLongerThen10(ls: List[String]): List[String] = ???
+
+  def lengthOfStrings(li: List[String]): List[Int] = ???
+
+  // A == 5
+  // B == 4
+  //  ...
+  def gradeTranslater(li: List[String]): List[Int] = ???
 
   // an Option can be either None or Some
   def max(is: List[Int]): Option[Int] = is match {
