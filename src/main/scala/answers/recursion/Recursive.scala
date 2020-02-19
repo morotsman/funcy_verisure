@@ -1,5 +1,7 @@
 package answers.recursion
 
+import scala.annotation.tailrec
+
 object Recursive {
 
   def multiply(li: List[Int]): Int = li match {
@@ -7,10 +9,21 @@ object Recursive {
     case i :: is => i * multiply(is)
   }
 
+  def multiplyTailRec(li: List[Int]): Int = {
+
+    @tailrec
+    def go(acc: Int, l: List[Int]): Int = l match {
+      case Nil => acc
+      case i :: is => go(i * acc, is)
+    }
+
+    go(1, li)
+  }
+
   def numbersBelow5(li: List[Int]): List[Int] = li match {
     case Nil => Nil
     case i :: is if i < 5 => i :: numbersBelow5(is)
-    case i :: is =>  numbersBelow5(is)
+    case i :: is => numbersBelow5(is)
   }
 
   //0! = 1

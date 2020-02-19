@@ -5,6 +5,11 @@ import Recursive._
 
 class RecursiveTest extends FunSuite {
 
+  test("multiply") {
+    assert(multiplyTailRec(List()) == 1)
+    assert(multiplyTailRec(List(1, 2, 3, 4)) == 24)
+  }
+
   test("numbersBelow5") {
     assert(numbersBelow5(List()) == List())
     assert(numbersBelow5(List(1, 2, 6, 2)) == List(1, 2, 2))
