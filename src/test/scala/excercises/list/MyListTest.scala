@@ -18,7 +18,7 @@ object MyListSpecification extends Properties("MyList") {
 
     var expectedNumber = 0
     var tmp = myList
-    while(tmp != Nil) {
+    while (tmp != Nil) {
       expectedNumber = expectedNumber + 1
       tmp = tmp.tail
     }
@@ -26,9 +26,35 @@ object MyListSpecification extends Properties("MyList") {
     myList.lenght() == expectedNumber
   }
 
-  property("startWith") = forAll { (la: List[Int]) =>
-    val myList = MyList.fromScalaList(la)
-    true
+  property("tail") = forAll { (la: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    mla.drop(1) == mla.tail()
+  }
+
+  property("drop") = forAll { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.append(mlb).drop(mla.lenght()) == mlb
+  }
+
+  property("startsWith") = forAll { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.append(mlb).startWith(mla)
+  }
+
+  property("append") = forAll { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.lenght() + mlb.lenght() == mla.append(mlb).lenght()
+  } && forAll { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.append(mlb).startWith(mla)
+  } && forAll { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.append(mlb).drop(mla.lenght()) == mlb
   }
 
 }

@@ -5,6 +5,9 @@ case class Cons[+A](val head: A, override val tail: MyList[A]) extends MyList[A]
 case object Nil extends MyList[Nothing]
 
 sealed trait MyList[+A] {
+  def unit[B >: A](b: B): List[B] =
+    List(b)
+
   def map[B](f: A => B): MyList[B] = this match {
     case Nil => Nil
     case Cons(a, as) => Cons(f(a), as.map(f))
@@ -17,13 +20,24 @@ sealed trait MyList[+A] {
 
   def lenght(): Int = this match {
     case Nil => 0
-    case Cons(a, as) => 1 + as.lenght()
+    case Cons(_, as) => 1 + as.lenght()
   }
 
-  def startWith[B >: A](la: MyList[B]): Boolean = (this, la) match {
+  def startWith[B >: A](lb: MyList[B]): Boolean = (this, lb) match {
     case (_, Nil) => true
     case (Cons(a, as), Cons(b, bs)) if a == b => as.startWith(bs)
     case _ => false
+  }
+
+  def append[B >: A](lb: MyList[B]): MyList[B] = (this, lb) match {
+    case (_, Nil) => this
+    case (Nil, _) => lb
+    case (Cons(a, as), _) => Cons(a, as.append(lb))
+  }
+
+  def drop(number: Int): MyList[A] = this match {
+    case Cons(_, as) if number > 0 => as.drop(number - 1)
+    case _ => this
   }
 
   def filter(f: A => Boolean): MyList[A] = ???
