@@ -37,6 +37,8 @@ sealed trait MyList[+A] {
   def map2[B, C](lb: MyList[B])(f: (A, B) => C): MyList[C] = ???
 
   def flatMap[B](a: A => MyList[B]): MyList[B] = ???
+
+  def reduce[B](z: B)(f: A => B): B = ???
 }
 
 object MyList {
