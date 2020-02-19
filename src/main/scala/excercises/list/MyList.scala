@@ -1,6 +1,6 @@
 package excercises.list
 
-case class Cons[+A](head: A, tail: MyList[A]) extends MyList[A]
+case class Cons[+A](val head: A, override val tail: MyList[A]) extends MyList[A]
 
 case object Nil extends MyList[Nothing]
 
@@ -8,6 +8,11 @@ sealed trait MyList[+A] {
   def map[B](f: A => B): MyList[B] = this match {
     case Nil => Nil
     case Cons(a, as) => Cons(f(a), as.map(f))
+  }
+
+  def tail(): MyList[A] = this match {
+    case Nil => Nil
+    case Cons(a, as) => as
   }
 
   def lenght(): Int = this match {
