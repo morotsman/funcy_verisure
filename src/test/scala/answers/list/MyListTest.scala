@@ -66,22 +66,26 @@ object MyListSpecification extends Properties("MyList") {
     myList.filter(i => i % 2 == 0).filter(i => i % 2 == 0) == myList.filter(i => i % 2 == 0)
   }
 
-  val numbers = Gen.choose(-4, 4)
-  val list = Gen.listOf(Gen.choose(-1000, 1000))
+  property("take") = forAll { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.append(mlb).take(mla.lenght()) == mla
+  }
 
-  property("take") = forAll(list, numbers) { (li: List[Int], number: Int) =>
-    val myList = MyList.fromScalaList(li)
-    val expected =
-      if (number > myList.lenght())
-        myList.lenght()
-      else if (number <= 0) {
-        0
-      } else {
-        number
-      }
-    expected == myList.take(number).lenght()
-  } && forAll(list, numbers)((li: List[Int], number: Int) => {
-    val myList = MyList.fromScalaList(li)
-    myList.startWith(myList.take(number))
-  })
+  val positiveNumbers = Gen.listOf(Gen.choose(1, Int.MaxValue))
+  val negativeNumbers = Gen.listOf(Gen.choose(Int.MinValue, -3))
+
+  property("takeWhile") = forAll(positiveNumbers, negativeNumbers) { (la: List[Int], lb: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    val mlb = MyList.fromScalaList(lb)
+    mla.append(mlb).takeWhile(i => i > 0) == mla
+  }
+
+  property("headOption") = forAll { (la: List[Int]) =>
+    val mla = MyList.fromScalaList(la)
+    if (mla.lenght() > 0)
+      MyList.unit(mla.headOption.get) == mla.take(1)
+    else
+      mla.headOption.isEmpty
+  }
 }

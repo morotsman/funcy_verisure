@@ -5,8 +5,6 @@ case class Cons[+A](val head: A, override val tail: MyList[A]) extends MyList[A]
 case object Nil extends MyList[Nothing]
 
 sealed trait MyList[+A] {
-  def unit[B >: A](b: B): List[B] =
-    List(b)
 
   def map[B](f: A => B): MyList[B] = this match {
     case Nil => Nil
@@ -15,7 +13,7 @@ sealed trait MyList[+A] {
 
   def tail(): MyList[A] = this match {
     case Nil => Nil
-    case Cons(a, as) => as
+    case Cons(_, as) => as
   }
 
   def lenght(): Int = this match {
@@ -59,6 +57,9 @@ object MyList {
   def apply[A](as: A*): MyList[A] =
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
+
+  def unit[A](a: A): List[A] =
+    List(a)
 
   def fromScalaList[A](as: List[A]): MyList[A] =
     as.reverse.foldLeft(Nil: MyList[A])((b, a) => Cons(a, b))
