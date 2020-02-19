@@ -1,4 +1,4 @@
-package answers.lecture3
+package answers.list
 
 import org.scalacheck.Prop.forAll
 import org.scalacheck.Properties
