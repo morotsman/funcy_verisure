@@ -5,7 +5,6 @@ import org.scalacheck.{Gen, Properties}
 
 object MyListSpecification extends Properties("MyList") {
 
-
   def id[A](a: A): A = a
 
   property("map identity") = forAll { (li: List[Int]) =>
@@ -13,9 +12,6 @@ object MyListSpecification extends Properties("MyList") {
     myList.map(id) == myList
   }
 
-  /*
-    For any functor f, and any functions foo and bar, map(foo, map(bar, f)) must be equal to map(contents => foo(bar(contents)), f).
- */
   property("map associative") = forAll { (li: List[Int]) =>
     val myList = MyList.fromScalaList(li)
     myList.map(id).map(id) == myList.map(i => id(id(i)))

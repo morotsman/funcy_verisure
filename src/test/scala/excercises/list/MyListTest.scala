@@ -8,9 +8,16 @@ import org.scalacheck.Properties
 //https://fsharpforfunandprofit.com/posts/property-based-testing-2/
 object MyListSpecification extends Properties("MyList") {
 
+  def id[A](a: A): A = a
+
   property("map identity") = forAll { (la: List[Int]) =>
     val myList = MyList.fromScalaList(la)
-    myList.map(a => a) == myList
+    myList.map(id) == myList
+  }
+
+  property("map associative") = forAll { (li: List[Int]) =>
+    val myList = MyList.fromScalaList(li)
+    myList.map(id).map(id) == myList.map(i => id(id(i)))
   }
 
   property("length") = forAll { (la: List[Int]) =>
