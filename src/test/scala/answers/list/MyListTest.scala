@@ -83,9 +83,9 @@ object MyListSpecification extends Properties("MyList") {
   val negativeNumbers = Gen.listOf(Gen.choose(Int.MinValue, -3))
 
   property("takeWhile") = forAll(positiveNumbers, negativeNumbers) { (la: List[Int], lb: List[Int]) =>
-    val mla = MyList.fromScalaList(la)
-    val mlb = MyList.fromScalaList(lb)
-    mla.append(mlb).takeWhile(i => i > 0) == mla
+    val positive = MyList.fromScalaList(la)
+    val negative = MyList.fromScalaList(lb)
+    positive.append(negative).takeWhile(i => i > 0) == positive
   }
 
   property("headOption") = forAll { (la: List[Int]) =>
@@ -95,4 +95,45 @@ object MyListSpecification extends Properties("MyList") {
     else
       mla.headOption.isEmpty
   }
+
+  property("map2") =
+    forAll { (la: List[Int], lb: List[Int]) =>
+      val mla = MyList.fromScalaList(la)
+      val mlb = MyList.fromScalaList(lb)
+      val expectedLength = mlb.lenght() min mla.lenght()
+      product(mla, mlb).lenght() == expectedLength
+    } && forAll { (la: List[Int], lb: List[Int]) =>
+      val mla = MyList.fromScalaList(la)
+      val mlb = MyList.fromScalaList(lb)
+      val expectedLength = mlb.lenght() min mla.lenght()
+      mlb.map2(mla)((_, a) => a) == mla.take(expectedLength)
+    } && forAll { (la: List[Int], lb: List[Int]) =>
+      val mla = MyList.fromScalaList(la)
+      val mlb = MyList.fromScalaList(lb)
+      val expectedLength = mlb.lenght() min mla.lenght()
+      mlb.map2(mla)((b, _) => b) == mlb.take(expectedLength)
+    } && forAll { (la: List[Int], lb: List[Int], lc: List[Int]) =>
+      val mla = MyList.fromScalaList(la)
+      val mlb = MyList.fromScalaList(lb)
+      val mlc = MyList.fromScalaList(lc)
+      product(product(mla, mlb), mlc) == product(mla, product(mlb, mlc)).map(assoc)
+    } && forAll { (la: List[Int], lb: List[Int]) =>
+      val mla = MyList.fromScalaList(la)
+      val mlb = MyList.fromScalaList(lb)
+
+      def f(a: Int): Int = a
+      def g(a: Int): Int = a
+      mla.map2(mlb)(productF(f, g)) == product(mla.map(f), mlb.map(g))
+    }
+
+  def product[A, B](fa: MyList[A], fb: MyList[B]): MyList[(A, B)] =
+    fa.map2(fb)((a, b) => (a, b))
+
+  def assoc[A, B, C](p: (A, (B, C))): ((A, B), C) = p match {
+    case (a, (b, c)) => ((a, b), c)
+  }
+
+  def productF[I1, O1, I2, O2](f: I1 => O1, g: I2 => O2): (I1, I2) => (O1, O2) =
+    (i1, i2) => (f(i1), g(i2))
+
 }

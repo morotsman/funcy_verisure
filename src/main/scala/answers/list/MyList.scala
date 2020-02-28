@@ -58,7 +58,13 @@ sealed trait MyList[+A] {
     case Cons(a, as) => Some(a)
   }
 
-  def map2[B, C](lb: MyList[B])(f: (A, B) => C): MyList[C] = ???
+  def map2[B, C](lb: MyList[B])(f: (A, B) => C): MyList[C] = (this, lb) match {
+    case (Cons(a, as), Cons(b, bs)) => Cons(f(a, b), as.map2(bs)(f))
+    case _ => Nil
+  }
+
+  def apply[B >: A, C](fab: MyList[B => C])(fa: MyList[B]): MyList[C] =
+    fab.map2(fa)((ab, a) => ab(a))
 
   def flatMap[B](a: A => MyList[B]): MyList[B] = ???
 
