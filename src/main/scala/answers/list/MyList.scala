@@ -63,8 +63,7 @@ sealed trait MyList[+A] {
     case _ => Nil
   }
 
-  def apply[B >: A, C](fab: MyList[B => C])(fa: MyList[B]): MyList[C] =
-    fab.map2(fa)((ab, a) => ab(a))
+
 
   def flatMap[B](a: A => MyList[B]): MyList[B] = ???
 
@@ -81,6 +80,9 @@ object MyList {
 
   def unit[A](a: A): MyList[A] =
     MyList(a)
+
+  def apply[A, B](fab: MyList[A => B])(fa: MyList[A]): MyList[B] =
+    fab.map2(fa)((ab, a) => ab(a))
 }
 
 
