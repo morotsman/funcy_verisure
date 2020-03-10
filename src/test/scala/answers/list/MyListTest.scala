@@ -136,4 +136,25 @@ object MyListSpecification extends Properties("MyList") {
   def productF[I1, O1, I2, O2](f: I1 => O1, g: I2 => O2): (I1, I2) => (O1, O2) =
     (i1, i2) => (f(i1), g(i2))
 
+  property("unit") =
+    forAll { (i: Int) =>
+      MyList.unit(i) == Cons(i, Nil)
+    }
+
+  property("flatMap") =
+    forAll { (li: List[Int]) =>
+      val mli = MyList.fromScalaList(li)
+      mli.flatMap(MyList.unit) == mli
+    } && forAll { (i: Int) =>
+      val f: Int => MyList[Int] =
+        in => MyList.unit(in)
+      MyList.unit(i).flatMap(f) == f(i)
+    } && forAll { (li: List[Int]) =>
+      val mli = MyList.fromScalaList(li)
+      val f: Int => MyList[Int] = in => MyList.unit(in)
+      val g: Int => MyList[Int] = in => MyList.unit(in)
+
+      mli.flatMap(f).flatMap(g) == mli.flatMap(i => f(i).flatMap(g))
+    }
+
 }

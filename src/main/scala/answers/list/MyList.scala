@@ -63,11 +63,15 @@ sealed trait MyList[+A] {
     case _ => Nil
   }
 
+  def flatMap[B](f: A => MyList[B]): MyList[B] = this match {
+    case Nil => Nil
+    case Cons(a, as) => f(a).append(as.flatMap(f))
+  }
 
-
-  def flatMap[B](a: A => MyList[B]): MyList[B] = ???
-
-  def reduce[B](z: B)(f: A => B): B = ???
+  def reduce[B](z: B)(f: (A, B) => B): B = this match {
+    case Nil => z
+    case Cons(a, as) => as.reduce(f(a,z))(f)
+  }
 }
 
 object MyList {
